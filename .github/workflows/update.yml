@@ -22,7 +22,7 @@ jobs:
         # add random sleep since we run on fixed schedule
         sleep (get-random -max 60)
         # run the actual logic of this step
-        $result = &check_and_build.ps1
+        $result = &.\check_and_build.ps1
         if ($result -eq $true) {
             echo "did_build=true" >> $env:GITHUB_OUTPUT
         } else {
