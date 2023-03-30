@@ -33,7 +33,7 @@ jobs:
         
     - name: publish to nuget
       if: ${{ steps.build.outputs.did_build == 'true' }}
-      run: dotnet nuget push ./.repo/bin/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+      run: dotnet nuget push ./.repo/bin/* -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
         
     - uses: EndBug/add-and-commit@v9
       with:
