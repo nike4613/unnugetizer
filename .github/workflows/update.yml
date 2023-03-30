@@ -1,0 +1,39 @@
+name: update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+   
+env:
+  DOTNET_NOLOGO: true
+  
+jobs:
+  sync:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: scripts
+    
+    - name: do build
+      id: build
+      shell: pwsh
+      run: |
+        # add random sleep since we run on fixed schedule
+        sleep (get-random -max 60)
+        # run the actual logic of this step
+        $result = &check_and_build.ps1
+        if ($result -eq $true) {
+            echo "did_build=true" >> $env:GITHUB_OUTPUT
+        } else {
+            echo "did_build=false" >> $env:GITHUB_OUTPUT
+        }
+        
+    - name: publish to nuget
+      if: ${{ steps.build.outputs.did_build == 'true' }}
+      run: dotnet nuget push ./.repo/bin/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+        
+    - uses: EndBug/add-and-commit@v9
+      with:
+        add: versions.txt
+        message: Update versions.txt

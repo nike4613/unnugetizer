@@ -99,7 +99,7 @@ $result = &{
 	
 	$props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
 	if ($Version -ne $null) {
-		$props += @("-p:VersionPrefix=$Version")
+		$props += @("-p:Version=$Version")
 	}
 	
 	dotnet build $props | Out-Host
