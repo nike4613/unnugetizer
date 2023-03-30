@@ -43,3 +43,5 @@ jobs:
       with:
         add: versions.txt
         message: Update versions.txt
+        default_author: github_actions
+
