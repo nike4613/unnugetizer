@@ -37,7 +37,7 @@ if ($Commit -ne $null -and $Version -ne $null) {
 	Write-Host "Pulling main branch and building with default version"
 }
 
-cd $baseDir
+pushd $baseDir
 
 function Fetch-Commit {
 	param (
@@ -88,14 +88,14 @@ if ($shouldClone) {
 }
 
 pushd .repo
-&{
+$result = &{
 	if ($Commit -ne $null) {
 		git checkout -f --detach $Commit
-		if (!$?) { return } # exit early
+		if (!$?) { return -4 } # exit early
 	}
 	
 	git apply ../unsponsor.patch --ignore-whitespace --recount
-	if (!$?) { return } # exit early
+	if (!$?) { return -3 } # exit early
 	
 	$props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
 	if ($Version -ne $null) {
@@ -103,8 +103,14 @@ pushd .repo
 	}
 	
 	dotnet build $props
-	if (!$?) { return } # exit early
+	if (!$?) { return -1 } # exit early
 	dotnet pack $props
-	if (!$?) { return } # exit early
+	if (!$?) { return -2 } # exit early
+	
+	return 0
 }
 popd
+
+popd
+
+return $result
