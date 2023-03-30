@@ -47,15 +47,15 @@ function Fetch-Commit {
 	$x = git status -s
 	#write-host "status" $?
 	if (!$?) { return $false }
-	git remote set-url origin $devloopUrl
+	git remote set-url origin $devloopUrl | Out-Host
 	#write-host "remote set-url" $?
 	if (!$?) { return $false }
 	
 	$fetchArgs = @("-ptf", "--depth=1")
 	if ($Commit -ne $null) {
-		git fetch origin $Commit $fetchArgs
+		git fetch origin $Commit $fetchArgs | Out-Host
 	} else {
-		git pull origin main $fetchArgs
+		git pull origin main $fetchArgs | Out-Host
 	}
 	#write-host "fetch" $?
 	if (!$?) { return $false }
@@ -78,7 +78,7 @@ if ($shouldClone) {
 	Write-Host initing repo
 	git init -q .repo
 	pushd .repo
-	git remote add origin $devloopUrl
+	git remote add origin $devloopUrl | Out-Host
 	$didFetch = Fetch-Commit -Commit $Commit
 	popd
 	if (!$didFetch) {
@@ -90,11 +90,11 @@ if ($shouldClone) {
 pushd .repo
 $result = &{
 	if ($Commit -ne $null) {
-		git checkout -f --detach $Commit
+		git checkout -f --detach $Commit | Out-Host
 		if (!$?) { return -4 } # exit early
 	}
 	
-	git apply ../unsponsor.patch --ignore-whitespace --recount
+	git apply ../unsponsor.patch --ignore-whitespace --recount | Out-Host
 	if (!$?) { return -3 } # exit early
 	
 	$props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
@@ -102,12 +102,10 @@ $result = &{
 		$props += @("-p:VersionPrefix=$Version")
 	}
 	
-	dotnet build $props
+	dotnet build $props | Out-Host
 	if (!$?) { return -1 } # exit early
-	dotnet pack $props
+	dotnet pack $props | Out-Host
 	if (!$?) { return -2 } # exit early
-	
-	return 0
 }
 popd
 

@@ -26,19 +26,16 @@ $result = &{
 	$versions > versions.txt
 	
 	# check if the versions list has changed
-	git diff --quiet --exit-code -- versions.txt
-	if ($?) { return 0 } # if it returns 0, the list hasn't changed
+	git diff -w --quiet --exit-code -- versions.txt
+	if ($?) { return } # if it returns 0, the list hasn't changed
 	
 	# the list has changed, so we should build the most recent (last) element of the versions list
 	[Array]::Reverse($versions)
 	$ver = $versions[0]
 	
 	# execute the build
-	$result = &"$baseDir/do_build.ps1" -VersionFromTag -Commit $ver
-	if ($result -ne 0) { return $result }
-	
-	# we're done
-	return 0
+	&"$baseDir/do_build.ps1" -VersionFromTag -Commit $ver
+	if (!$?) { return $LastExitCode }
 }
 
 popd
