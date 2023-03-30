@@ -1,4 +1,4 @@
-# UnNuGetizer [![update](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml/badge.svg)](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml) [![Version](https://img.shields.io/nuget/vpre/UnNuGetizer.svg?color=royalblue)](https://www.nuget.org/packages/UnNuGetizer)
+# ![Icon](https://raw.githubusercontent.com/devlooped/nugetizer/main/img/nugetizer-32.png) UnNuGetizer [![update](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml/badge.svg)](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml) [![Version](https://img.shields.io/nuget/vpre/UnNuGetizer.svg?color=royalblue)](https://www.nuget.org/packages/UnNuGetizer)
 
 A "fork" of [NuGetizer](https://github.com/devlooped/nugetizer) which removes SponsorLink.
 
