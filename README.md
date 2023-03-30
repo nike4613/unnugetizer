@@ -1,5 +1,7 @@
 # UnNuGetizer [![update](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml/badge.svg)](https://github.com/nike4613/unnugetizer/actions/workflows/update.yml)
 
+[![Version](https://img.shields.io/nuget/vpre/UnNuGetizer.svg?color=royalblue)](https://www.nuget.org/packages/UnNuGetizer)
+
 A "fork" of [NuGetizer](https://github.com/devlooped/nugetizer) which removes SponsorLink.
 
 SponsorLink is a closed-source, obfuscated, Roslyn analyzer which, during the compiler invocation, performs
