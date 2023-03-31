@@ -39,7 +39,7 @@ index 3e4618a..0000000
 -}
 \ No newline at end of file
 diff --git a/src/Directory.Build.targets b/src/Directory.Build.targets
-index 708c456..8096f17 100644
+index 708c456..a81ebd7 100644
 --- a/src/Directory.Build.targets
 +++ b/src/Directory.Build.targets
 @@ -25,6 +25,12 @@
@@ -56,23 +56,63 @@ index 708c456..8096f17 100644
      <!-- This is compatible with nugetizer and SDK pack -->
  
 diff --git a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
-index 55d70bb..391b53a 100644
+index 55d70bb..c9abafe 100644
 --- a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
 +++ b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
-@@ -40,6 +40,13 @@
-     <None Include="NuGetizer.PackageMetadata.targets;dotnet-nugetize.props;dotnet-nugetize.targets" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" Pack="true" />
+@@ -41,6 +41,13 @@
      <None Update="NuGetizer.Tasks.targets" Pack="false" />
    </ItemGroup>
-+
-+  <ItemGroup Condition="'$(BuildPackageBaseName)' != ''">
-+    <None Update="NuGetizer.props" PackagePath="build\$(BuildPackageBaseName)%(Extension)" />
-+    <None Update="NuGetizer.targets" PackagePath="build\$(BuildPackageBaseName)%(Extension)" />
-+    <None Update="NuGetizer.MultiTargeting.props" PackagePath="buildMultiTargeting\$(BuildPackageBaseName)%(Extension)" />
-+    <None Update="NuGetizer.MultiTargeting.targets" PackagePath="buildMultiTargeting\$(BuildPackageBaseName)%(Extension)" />
-+  </ItemGroup>
  
++  <ItemGroup Condition="'$(BuildPackageBaseName)' != ''">
++    <None Update="UnNuGetizer.props" PackagePath="build\%(Filename)%(Extension)" />
++    <None Update="UnNuGetizer.targets" PackagePath="build\%(Filename)%(Extension)" />
++    <None Update="UnNuGetizer.MultiTargeting.props" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" />
++    <None Update="UnNuGetizer.MultiTargeting.targets" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" />
++  </ItemGroup>
++
    <ItemGroup>
      <ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj" ReferenceOutputAssembly="false" />
+   </ItemGroup>
+diff --git a/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.props b/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.props
+new file mode 100644
+index 0000000..2d46452
+--- /dev/null
++++ b/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.props
+@@ -0,0 +1,3 @@
++<Project>
++  <Import Project="NuGetizer.props" />
++</Project>
+\ No newline at end of file
+diff --git a/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.targets b/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.targets
+new file mode 100644
+index 0000000..fea8e3e
+--- /dev/null
++++ b/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.targets
+@@ -0,0 +1,3 @@
++<Project>
++  <Import Project="NuGetizer.targets" />
++</Project>
+\ No newline at end of file
+diff --git a/src/NuGetizer.Tasks/UnNuGetizer.props b/src/NuGetizer.Tasks/UnNuGetizer.props
+new file mode 100644
+index 0000000..2d46452
+--- /dev/null
++++ b/src/NuGetizer.Tasks/UnNuGetizer.props
+@@ -0,0 +1,3 @@
++<Project>
++  <Import Project="NuGetizer.props" />
++</Project>
+\ No newline at end of file
+diff --git a/src/NuGetizer.Tasks/UnNuGetizer.targets b/src/NuGetizer.Tasks/UnNuGetizer.targets
+new file mode 100644
+index 0000000..fea8e3e
+--- /dev/null
++++ b/src/NuGetizer.Tasks/UnNuGetizer.targets
+@@ -0,0 +1,3 @@
++<Project>
++  <Import Project="NuGetizer.targets" />
++</Project>
+\ No newline at end of file
 diff --git a/src/dotnet-nugetize/Program.cs b/src/dotnet-nugetize/Program.cs
 index e61337d..d025bfa 100644
 --- a/src/dotnet-nugetize/Program.cs
