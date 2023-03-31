@@ -39,10 +39,10 @@ index 3e4618a..0000000
 -}
 \ No newline at end of file
 diff --git a/src/Directory.Build.targets b/src/Directory.Build.targets
-index 708c456..0dcd12e 100644
+index 708c456..8096f17 100644
 --- a/src/Directory.Build.targets
 +++ b/src/Directory.Build.targets
-@@ -25,6 +25,11 @@
+@@ -25,6 +25,12 @@
      <IsPackable Condition="'$(PackageId)' != ''">true</IsPackable>
    </PropertyGroup>
    
@@ -51,10 +51,28 @@ index 708c456..0dcd12e 100644
 +    <PackageId Condition="'$(BuildPackageBaseName)' != ''">$([System.String]::Copy('$(PackageId)').Replace('NuGetizer', '$(BuildPackageBaseName)'))</PackageId>
 +    <PackageId Condition="'$(BuildPackageBaseName2)' != ''">$([System.String]::Copy('$(PackageId)').Replace('nugetize', '$(BuildPackageBaseName2)'))</PackageId>
 +  </PropertyGroup>
-+  
++
    <ItemGroup Condition="'$(IsPackable)' == 'true'" Label="NuGet">
      <!-- This is compatible with nugetizer and SDK pack -->
  
+diff --git a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
+index 55d70bb..391b53a 100644
+--- a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
++++ b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
+@@ -40,6 +40,13 @@
+     <None Include="NuGetizer.PackageMetadata.targets;dotnet-nugetize.props;dotnet-nugetize.targets" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" Pack="true" />
+     <None Update="NuGetizer.Tasks.targets" Pack="false" />
+   </ItemGroup>
++
++  <ItemGroup Condition="'$(BuildPackageBaseName)' != ''">
++    <None Update="NuGetizer.props" PackagePath="build\$(BuildPackageBaseName)%(Extension)" />
++    <None Update="NuGetizer.targets" PackagePath="build\$(BuildPackageBaseName)%(Extension)" />
++    <None Update="NuGetizer.MultiTargeting.props" PackagePath="buildMultiTargeting\$(BuildPackageBaseName)%(Extension)" />
++    <None Update="NuGetizer.MultiTargeting.targets" PackagePath="buildMultiTargeting\$(BuildPackageBaseName)%(Extension)" />
++  </ItemGroup>
+ 
+   <ItemGroup>
+     <ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj" ReferenceOutputAssembly="false" />
 diff --git a/src/dotnet-nugetize/Program.cs b/src/dotnet-nugetize/Program.cs
 index e61337d..d025bfa 100644
 --- a/src/dotnet-nugetize/Program.cs
