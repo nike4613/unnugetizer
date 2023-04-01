@@ -59,6 +59,7 @@ function Fetch-Commit {
   }
   #write-host "fetch" $?
   if (!$?) { return $false }
+  git clean -fx | Out-Host
   return $true
 }
 

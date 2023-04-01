@@ -64,10 +64,10 @@ index 55d70bb..c9abafe 100644
    </ItemGroup>
  
 +  <ItemGroup Condition="'$(BuildPackageBaseName)' != ''">
-+    <None Update="UnNuGetizer.props" PackagePath="build\%(Filename)%(Extension)" />
-+    <None Update="UnNuGetizer.targets" PackagePath="build\%(Filename)%(Extension)" />
-+    <None Update="UnNuGetizer.MultiTargeting.props" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" />
-+    <None Update="UnNuGetizer.MultiTargeting.targets" PackagePath="buildMultiTargeting\%(Filename)%(Extension)" />
++    <None Update="UnNuGetizer.props" PackagePath="build\UnNuGetizer.props" />
++    <None Update="UnNuGetizer.targets" PackagePath="build\UnNuGetizer.targets" />
++    <None Update="UnNuGetizer.MultiTargeting.props" PackagePath="buildMultiTargeting\UnNuGetizer.props" />
++    <None Update="UnNuGetizer.MultiTargeting.targets" PackagePath="buildMultiTargeting\UnNuGetizer.targets" />
 +  </ItemGroup>
 +
    <ItemGroup>
