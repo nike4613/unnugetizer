@@ -2,14 +2,9 @@ diff --git a/src/CodeAnalysis/CodeAnalysis.csproj b/src/CodeAnalysis/CodeAnalysi
 index 949e41d..8f6938e 100644
 --- a/src/CodeAnalysis/CodeAnalysis.csproj
 +++ b/src/CodeAnalysis/CodeAnalysis.csproj
-@@ -14,7 +14,6 @@
-     <PackageReference Include="ThisAssembly.AssemblyInfo" Version="1.2.13" PrivateAssets="all" />
-     <PackageReference Include="ThisAssembly.Strings" Version="1.2.13" PrivateAssets="all" />
-     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" Pack="false" />
+@@ -17,2 +17,1 @@
 -    <PackageReference Include="Devlooped.SponsorLink" Version="0.10.5" />
    </ItemGroup>
- 
-   <ItemGroup>
 diff --git a/src/CodeAnalysis/SponsorLinker.cs b/src/CodeAnalysis/SponsorLinker.cs
 deleted file mode 100644
 index 27af180..0000000
@@ -195,11 +190,8 @@ diff --git a/src/dotnet-nugetize/dotnet-nugetize.csproj b/src/dotnet-nugetize/do
 index 57894c1..726b257 100644
 --- a/src/dotnet-nugetize/dotnet-nugetize.csproj
 +++ b/src/dotnet-nugetize/dotnet-nugetize.csproj
-@@ -30,8 +30,6 @@
-     <PackageReference Include="Spectre.Console.Analyzer" Version="0.46.0" PrivateAssets="all" />
-     <PackageReference Include="ThisAssembly.Project" Version="1.2.13" PrivateAssets="all" />
-     <PackageReference Include="ThisAssembly.Strings" Version="1.2.13" PrivateAssets="all" />
--    <PackageReference Include="Devlooped.SponsorLink" Version="0.10.3" />
+@@ -33,5 +33,3 @@
+-    <PackageReference Include="Devlooped.SponsorLink" Version="0.10.5" />
 -    <PackageReference Include="System.Net.Http.WinHttpHandler" Version="7.0.0" />
      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
    </ItemGroup>

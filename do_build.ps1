@@ -95,7 +95,7 @@ $result = &{
     if (!$?) { return -4 } # exit early
   }
 	
-  git apply ../unsponsor.patch --ignore-whitespace --recount | Out-Host
+  git apply ../unsponsor.patch --ignore-whitespace --recount -3 | Out-Host
   if (!$?) { return -3 } # exit early
 
   $props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
