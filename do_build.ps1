@@ -71,7 +71,7 @@ if (Test-Path -PathType Container .repo) {
   popd
   #write-host "shouldClone" $shouldClone
   if ($shouldClone) {
-    rm -r -force .repo
+    remove-item -r -force .repo
   }
 }
 
@@ -88,6 +88,19 @@ if ($shouldClone) {
   }
 }
 
+function Remove-ByXPath {
+  param (
+    $file,
+    $xpath
+  )
+  [xml]$xml = get-content $file
+  $node = (select-xml $xml -xpath $xpath).Node
+  if ($node) {
+    $node.ParentNode.RemoveChild($node)
+    $xml.Save($file)
+  }
+}
+
 pushd .repo
 $result = &{
   if ($Commit -ne $null) {
@@ -98,8 +111,14 @@ $result = &{
   git apply ../unsponsor.patch --ignore-whitespace --recount -3 | Out-Host
   if (!$?) { return -3 } # exit early
 
+  # do manual XML mutation
+  Remove-ByXPath "$(pwd)/src/CodeAnalysis/CodeAnalysis.csproj" "/Project/ItemGroup/PackageReference[@Include='Devlooped.SponsorLink']"
+  Remove-ByXPath "$(pwd)/src/dotnet-nugetize/dotnet-nugetize.csproj" "/Project/ItemGroup/PackageReference[@Include='Devlooped.SponsorLink']"
+  Remove-ByXPath "$(pwd)/src/dotnet-nugetize/dotnet-nugetize.csproj" "/Project/ItemGroup/PackageReference[@Include='System.Net.Http.WinHttpHandler']"
+
   $props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
   $props += @("-p:Repository=https://github.com/nike4613/unnugetizer")
+  $props += @("-p:Authors=DAniel Cazzulino, DaNike")
   if ($Version -ne $null) {
     $props += @("-p:Version=$Version")
   }
