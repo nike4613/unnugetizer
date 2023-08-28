@@ -118,7 +118,6 @@ $result = &{
 
   $props = @("-c","Release","-p:BuildPackageBaseName=UnNuGetizer","-p:BuildPackageBaseName2=unnugetize")
   $props += @("-p:Repository=https://github.com/nike4613/unnugetizer")
-  $props += @("-p:Authors=DAniel Cazzulino, DaNike")
   if ($Version -ne $null) {
     $props += @("-p:Version=$Version")
   }

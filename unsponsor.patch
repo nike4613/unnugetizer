@@ -1,3 +1,14 @@
+ src/CodeAnalysis/SponsorLinker.cs                  | 38 ---------------------
+ src/Directory.Build.props                          |  2 +-
+ src/Directory.Build.targets                        |  6 ++++
+ src/NuGetizer.Tasks/NuGetizer.Tasks.csproj         |  7 ++++
+ .../UnNuGetizer.MultiTargeting.props               |  3 ++
+ .../UnNuGetizer.MultiTargeting.targets             |  3 ++
+ src/NuGetizer.Tasks/UnNuGetizer.props              |  3 ++
+ src/NuGetizer.Tasks/UnNuGetizer.targets            |  3 ++
+ src/dotnet-nugetize/Program.cs                     | 39 +---------------------
+ 9 files changed, 27 insertions(+), 77 deletions(-)
+
 diff --git a/src/CodeAnalysis/SponsorLinker.cs b/src/CodeAnalysis/SponsorLinker.cs
 deleted file mode 100644
 index 27af180..0000000
@@ -43,8 +54,21 @@ index 27af180..0000000
 -    public SponsorLinker() : base(settings) { }
 -}
 \ No newline at end of file
+diff --git a/src/Directory.Build.props b/src/Directory.Build.props
+index 6b9a668..ca6bf04 100644
+--- a/src/Directory.Build.props
++++ b/src/Directory.Build.props
+@@ -19,7 +19,7 @@
+   </PropertyGroup>
+ 
+   <PropertyGroup Label="NuGet">
+-    <Authors>Daniel Cazzulino</Authors>
++    <Authors>Daniel Cazzulino, DaNike</Authors>
+     <Copyright>Copyright (C) Daniel Cazzulino and Contributors. All rights reserved.</Copyright>
+     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 diff --git a/src/Directory.Build.targets b/src/Directory.Build.targets
-index 5bd4019..bef1cf6 100644
+index 248c2b7..c2da203 100644
 --- a/src/Directory.Build.targets
 +++ b/src/Directory.Build.targets
 @@ -25,6 +25,12 @@
@@ -61,7 +85,7 @@ index 5bd4019..bef1cf6 100644
      <!-- This is compatible with nugetizer and SDK pack -->
  
 diff --git a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
-index 074f566..74fa942 100644
+index 055a012..1294d15 100644
 --- a/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
 +++ b/src/NuGetizer.Tasks/NuGetizer.Tasks.csproj
 @@ -41,6 +41,13 @@
@@ -76,7 +100,7 @@ index 074f566..74fa942 100644
 +  </ItemGroup>
 +
    <ItemGroup>
-     <ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj" ReferenceOutputAssembly="false" />
+     <!--<ProjectReference Include="..\CodeAnalysis\CodeAnalysis.csproj" ReferenceOutputAssembly="false" />-->
    </ItemGroup>
 diff --git a/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.props b/src/NuGetizer.Tasks/UnNuGetizer.MultiTargeting.props
 new file mode 100644
